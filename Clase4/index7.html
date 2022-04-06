@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+        integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+
+    <title>Hello, world!</title>
+</head>
+
+<body>
+    <div class="container">
+        <h3> Datos del afiliado/a</h3>
+
+        <form action="/" method="post">
+            <label for="nombre">Nombre</label>
+            <br>
+            <input id="txtNombre" type="text" name="nombre" placeholder="Escribir nombre">
+            <br>
+            <label for="apellido">Apellidos</label>
+            <br>
+            <input id="txtApellido" type="text" name="apellido" placeholder="Escribir apellido">
+            <br>
+            <br>
+
+            <label for="numeroDocumento">Número de Documento</label>
+            <br>
+            <input type="text" id="txtDocumento" placeholder="Ingrese numeros" pattern="[0-9]{8}">
+            <br>
+            <br>
+
+            <label for="genero">Seleccione Genero:</label>
+            <br>
+            <input type="radio" name="genero" id="genero" value="1"> Varón<BR>
+            <input type="radio" name="genero" id="genero" value="2"> Mujer<br>
+            <input type="radio" name="genero" id="genero" value="3"> Otro
+            <br>
+            <textarea style="resize: none;" name="otro" id="txtArea" cols="10" rows="1"
+                placeholder="Justifique su seleccion" onkeyup="contadorCaracteres();"></textarea>
+            <p id="contador"> </p>
+                <br>
+            <br>
+
+            <label for="tipoAfiliado">Tipo de afiliado:</label>
+            <br>
+            <input type="checkbox" name="tipoAfiliado" id="tipoAfiliado"> Afiliado activo<br>
+            <input type="checkbox" name="tipoAfiliado" id="tipoAfiliado"> Afiliado pasivo
+            <br>
+            <br>
+
+            <label for="fechaNacimiento"> Fecha de Nacimiento:</label>
+            <br>
+            <input type="date" name="fechaNacimiento" id="fechaNacimiento" min="1920-01-01" max="2022-03-23">
+            <br>
+            <br>
+
+            <label for="email">Ingrese su direccion email</label>
+            <br>
+            <input type="text" id="email" placeholder="Ingrese su correo">
+            <br>
+            <br>
+            <label for="nombreUsuario">Ingrese un nombre de usuario:</label>
+            <br>
+            <input type="text" id="nombreUsuario" placeholder="Nombre de usuario">
+            <br>
+
+            <label for="password">Ingrese una contraseña</label>
+            <br>
+            <input type="password" id="password" placeholder="Ingrese una contraseña">
+            <br>
+            <label for="password">Confirme su contraseña</label>
+            <br>
+            <input type="password" id="password" placeholder="Confirme su contraseña">
+            <br>
+            <br>
+
+            <button type="button" onclick="validarForm()">Validar</button>
+            <button type="button" onclick="guardarDatos()">Guardar</button>
+
+        </form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF"
+        crossorigin="anonymous"></script>
+    <script>
+        function validarForm() {
+            var txtNombre = document.getElementById('txtNombre');
+            var txtApellido = document.getElementById('txtApellido');
+            var txtDocumento = document.getElementById('txtDocumento')
+            var radioButtonGenero = document.getElementsByName('genero');
+            var txtArea = document.getElementById('txtArea');
+            var tipoAfiliado = document.getElementsByName('tipoAfiliado');
+
+            if (txtNombre.value === '') {
+                alert('El nombre es requerido');
+                return false;
+            }
+
+            if (txtApellido.value === '') {
+                alert('El apellido es requerido');
+                return false;
+            }
+
+            if (txtDocumento.value === '') {
+                alert('Debe ingresar un numero de documento');
+                return false;
+            } else if (txtDocumento.value.length < 8) {
+                alert('El campo de documento tiene un minimo de 8 caracteres!')
+                return false;
+            } else if (txtDocumento.value.length > 10) {
+                alert('El campo de documento tiene un maximo de 10 caracteres!')
+                return false;
+            }
+            if(isNaN(txtDocumento.value)){
+                alert('Ingresar solo numeros')
+            }
+
+
+            var algunoSeleccionado = false;
+            for (let i = 0; i < radioButtonGenero.length; i++) {
+                if (radioButtonGenero[i].checked) {
+                    var algunoSeleccionado = true;
+                    break;
+                }
+
+            }
+
+            if (algunoSeleccionado == false) {
+                alert('Debe seleccionar un tipo de sexo')
+                return false;
+            }
+            return true;
+
+
+            if (txtArea.value === '') {
+                alert('Debe dejar su justificacion');
+                return false;
+            } else if (txtArea.value.length > 100) {
+                alert('El campo de justificacion tiene un maximo de 100 caracteres!')
+                return false;
+            }
+
+            var algunTipoAfiliado = false;
+            for (let i = 0; i < tipoAfiliado.length; i++) {
+                if (tipoAfiliado[i].checked) {
+                    var algunTipoAfiliado = true;
+                    break;
+                }
+
+            }
+            if (algunTipoAfiliado == false) {
+                alert('Debe seleccionar un tipo de afiliado')
+                return false;
+            }
+        }
+        function guardarDatos() {
+            if (validarForm() == true) {
+                alert('Guardando datos')
+            } else {
+                alert('Revise sus datos')
+            }
+
+        }
+        function contadorCaracteres()[
+            let txtArea=document.getElementById('txtArea');
+            document.getElementById('contador').innerHTML=txtArea.value.length;
+
+        ]
+
+    </script>
+
+</body>
+
+</html>
